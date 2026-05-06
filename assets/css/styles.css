@@ -145,13 +145,27 @@ section { padding: 7rem 0; position: relative; }
 }
 
 .nav-inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
+  gap: 2rem;
   max-width: var(--container-max);
   margin: 0 auto;
   padding: 0 2rem;
 }
+
+/* Le logo s'aligne à gauche */
+.nav-inner > .brand { justify-self: start; }
+
+/* Les liens centrés au milieu de la page */
+.nav-inner > .nav-links {
+  justify-self: center;
+  margin: 0;
+  padding: 0;
+}
+
+/* Le CTA glossy s'aligne à droite */
+.nav-inner > .nav-cta-glossy { justify-self: end; }
 
 .brand {
   font-family: var(--font-round);
@@ -1523,3 +1537,110 @@ section { padding: 7rem 0; position: relative; }
 
 /* Cacher les anciens filtres (si jamais une trace HTML restait) */
 .galerie-filters { display: none; }
+
+
+/* === BOUTON CTA GLOSSY (Rejoins-nous) === */
+.nav-cta-glossy {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.75rem;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(135deg, #FF1572 0%, #EC1558 30%, #FF6B42 70%, #FF8C42 100%);
+  background-size: 200% 200%;
+  color: var(--cream);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  overflow: hidden;
+  box-shadow:
+    0 6px 20px rgba(236, 21, 88, 0.35),
+    0 2px 6px rgba(255, 140, 66, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -2px 6px rgba(180, 0, 50, 0.25);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+              box-shadow 0.3s ease,
+              background-position 0.6s ease;
+  isolation: isolate;
+}
+
+/* Reflet glossy en haut du bouton */
+.nav-cta-glossy::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(180deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.1) 60%,
+    transparent 100%);
+  border-radius: var(--radius-pill) var(--radius-pill) 50% 50% / var(--radius-pill) var(--radius-pill) 100% 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Animation de brillance qui passe (effet shimmer) */
+.nav-cta-glossy::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%);
+  transform: skewX(-20deg);
+  transition: left 0.7s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.nav-cta-glossy span {
+  position: relative;
+  z-index: 3;
+  text-shadow: 0 1px 2px rgba(180, 0, 50, 0.3);
+}
+
+.nav-cta-glossy:hover {
+  transform: translateY(-2px) scale(1.02);
+  background-position: 100% 100%;
+  box-shadow:
+    0 10px 28px rgba(236, 21, 88, 0.45),
+    0 4px 10px rgba(255, 140, 66, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -2px 8px rgba(180, 0, 50, 0.3);
+}
+
+.nav-cta-glossy:hover::after { left: 130%; }
+
+.nav-cta-glossy:active { transform: translateY(0) scale(0.98); }
+
+/* === BRAND text + icon glossy léger === */
+.brand-text {
+  background: linear-gradient(135deg, #EC1558 0%, #FF6B42 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+/* Mobile : retour à un layout plus compact */
+@media (max-width: 968px) {
+  .nav-inner {
+    grid-template-columns: auto 1fr auto;
+  }
+  .nav-inner > .nav-cta-glossy {
+    grid-column: 3;
+  }
+  .nav-links {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-cta-glossy { padding: 0.55rem 1.1rem; font-size: 0.8125rem; }
+  .nav-inner { padding: 0 1.25rem; }
+}
