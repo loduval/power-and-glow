@@ -284,10 +284,10 @@ section { padding: 7rem 0; position: relative; }
   background-image: url('../photos/photo-foret-rituel.jpg');
   background-size: cover;
   background-position: center;
-  opacity: 0.55;
+  opacity: 0.92;
   z-index: 0;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 25%, black 100%);
-          mask-image: linear-gradient(to right, transparent 0%, black 25%, black 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%, black 100%);
+          mask-image: linear-gradient(to right, transparent 0%, black 30%, black 100%);
 }
 
 .hero::after {
